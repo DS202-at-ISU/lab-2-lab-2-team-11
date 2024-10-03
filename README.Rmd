@@ -7,9 +7,15 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(classdata)
+library(tidyverse)
+library(ggplot2)
+library(rmarkdown)
+library(knitr)
 ```
 
-# Lab report #1
+# Lab #2 Team #11 - Report:
 
 Follow the instructions posted at https://ds202-at-isu.github.io/labs.html for the lab assignment. The work is meant to be finished during the lab time, but you have time until Monday evening to polish things.
 
@@ -17,3 +23,63 @@ Include your answers in this document (Rmd file). Make sure that it knits proper
 
 All submissions to the github repo will be automatically uploaded for grading once the due date is passed.
 Submit a link to your repository on Canvas (only one submission per team) to signal to the instructors that you are done with your submission.
+
+---
+TL;DR Summary - Bhargav Yellepeddi:
+
+The analysis of Ames property sales since 2017 shows most sales between $100K–$400K. Total living area follows a normal distribution, with outliers. A positive correlation exists between living area and sale price, though it weakens for larger properties. Missing data led to 447 rows being excluded.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Bhargav Yellepeddi - SalePrice and Total Living Area Analysis:
+
+```{r}
+# Load the Ames dataset
+data <- classdata::ames
+```
+
+```{r}
+# View first few rows
+head(data)
+```
+
+```{r}
+# Inspect the structure of the dataset
+str(data)
+```
+
+
+```{r}
+unique(data[,"Sale Price"])
+```
+
+
+```{r}
+# Histogram of SalePrice
+ ggplot(data, aes(x = `Sale Price`)) +
+   geom_histogram(binwidth = 20000, fill = 'blue', color = 'black') +   
+   labs(title = "Distribution of Sale Prices", x = "Sale Price", y = "Count")
+```
+
+
+```{r}
+# Summary statistics of TotalLivingArea
+summary(data$`TotalLivingArea (sf)`)
+```
+
+
+```{r}
+# Histogram of TotalLivingArea
+ggplot(data, aes(x = `TotalLivingArea (sf)`)) +
+  geom_histogram(binwidth = 100, fill = 'green', color = 'black') +
+  labs(title = "Distribution of Ground Living Area", x = "Ground Living Area (sq ft)", y = "Count")
+```
+
+
+```{r}
+# Scatterplot of SalePrice vs TotalLivingArea
+ggplot(data, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
+  geom_point(color = 'purple') +
+  labs(title = "Sale Price vs Ground Living Area", x = "Ground Living Area (sq ft)", y = "Sale Price")
+```
+------------------------------------------------------------------------------------------------------------------------------------------------
