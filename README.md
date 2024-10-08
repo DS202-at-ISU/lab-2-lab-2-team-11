@@ -168,9 +168,11 @@ ggplot(data, aes(x = Acres, y = `Sale Price`)) +
     ## Warning: Removed 89 rows containing missing values or values outside the scale range
     ## (`geom_point()`).
 
-![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- --> Here we can
-see there is a few huge outliers so we should probably filter them out
-and look again out our data as well as look at our outliers.
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+Here we can see there is a few huge outliers so we should probably
+filter them out and look again out our data as well as look at our
+outliers.
 
 ``` r
 # Filter properties with high Acres but low Sale Price
@@ -201,8 +203,8 @@ ggplot(filtered_data, aes(x = Acres, y = `Sale Price`)) +
        x = 'Acres', y = 'Sale Price ($)')
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- --> Here we can
-see a few points of data looking at the anomolies and also looking at
-the cleaned data. From the filtered data, we cna see that there is
-little correlation between acre size and sales price.
-————————————————————————————————————————————————
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+Here we can see a few points of data looking at the anomolies and also
+looking at the cleaned data. From the filtered data, we cna see that
+there is little correlation between acre size and sales price.

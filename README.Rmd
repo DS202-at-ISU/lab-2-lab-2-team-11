@@ -85,10 +85,13 @@ ggplot(data, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
 ```
 
 Keenan Jacobs and Analysis of Acres
+
 ```{r}
 summary(data$Acres)
 ```
+
 The range shows a semi-wide distribution, with most properties having a small land size. Let's visualize this distribution using a histogram.
+
 ```{r}
 # Histogram of Acres
 ggplot(data, aes(x = Acres)) + 
@@ -103,7 +106,9 @@ ggplot(data, aes(x = Acres, y = `Sale Price`)) +
   labs(title = 'Scatterplot of Property Size vs Sale Price', x = 'Acres', y = 'Sale Price ($)')
 
 ```
+
 Here we can see there is a few huge outliers so we should probably filter them out and look again out our data as well as look at our outliers.
+
 ```{r}
 # Filter properties with high Acres but low Sale Price
 
@@ -132,5 +137,6 @@ ggplot(filtered_data, aes(x = Acres, y = `Sale Price`)) +
   labs(title = 'Scatterplot of Property Size vs Sale Price (Filtered Data)', 
        x = 'Acres', y = 'Sale Price ($)')
 ```
+
 Here we can see a few points of data looking at the anomolies and also looking at the cleaned data. From the filtered data, we cna see that there is little correlation between acre size and sales price.
-------------------------------------------------------------------------------------------------------------------------------------------------
+
