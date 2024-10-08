@@ -17,9 +17,9 @@ grading once the due date is passed. Submit a link to your repository on
 Canvas (only one submission per team) to signal to the instructors that
 you are done with your submission.
 
-|  |
-|----|
-| TL;DR Summary - Bhargav Yellepeddi: |
+|                                                                                                                                                                                                                                                                                                                |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TL;DR Summary - Bhargav Yellepeddi:                                                                                                                                                                                                                                                                            |
 | The analysis of Ames property sales since 2017 shows most sales between \$100K–\$400K. Total living area follows a normal distribution, with outliers. A positive correlation exists between living area and sale price, though it weakens for larger properties. Missing data led to 447 rows being excluded. |
 
 Bhargav Yellepeddi - SalePrice and Total Living Area Analysis:
@@ -35,18 +35,15 @@ head(data)
 ```
 
     ## # A tibble: 6 × 16
-    ##   `Parcel ID` Address      Style Occupancy `Sale Date` `Sale Price` `Multi Sale`
-    ##   <chr>       <chr>        <fct> <fct>     <date>             <dbl> <chr>       
-    ## 1 0903202160  1024 RIDGEW… 1 1/… Single-F… 2022-08-12        181900 <NA>        
-    ## 2 0907428215  4503 TWAIN … 1 St… Condomin… 2022-08-04        127100 <NA>        
-    ## 3 0909428070  2030 MCCART… 1 St… Single-F… 2022-08-15             0 <NA>        
-    ## 4 0923203160  3404 EMERAL… 1 St… Townhouse 2022-08-09        245000 <NA>        
-    ## 5 0520440010  4507 EVERES… <NA>  <NA>      2022-08-03        449664 <NA>        
-    ## 6 0907275030  4512 HEMING… 2 St… Single-F… 2022-08-16        368000 <NA>        
-    ## # ℹ 9 more variables: YearBuilt <dbl>, Acres <dbl>,
-    ## #   `TotalLivingArea (sf)` <dbl>, Bedrooms <dbl>,
-    ## #   `FinishedBsmtArea (sf)` <dbl>, `LotArea(sf)` <dbl>, AC <chr>,
-    ## #   FirePlace <chr>, Neighborhood <fct>
+    ##   `Parcel ID` Address                       Style         Occupancy `Sale Date` `Sale Price` `Multi Sale` YearBuilt Acres `TotalLivingArea (sf)` Bedrooms FinishedBsmtArea (sf…¹ `LotArea(sf)` AC    FirePlace Neighborhood
+    ##   <chr>       <chr>                         <fct>         <fct>     <date>             <dbl> <chr>            <dbl> <dbl>                  <dbl>    <dbl>                  <dbl>         <dbl> <chr> <chr>     <fct>       
+    ## 1 0903202160  1024 RIDGEWOOD AVE, AMES      1 1/2 Story … Single-F… 2022-08-12        181900 <NA>              1940 0.109                   1030        2                     NA          4740 Yes   Yes       (28) Res: B…
+    ## 2 0907428215  4503 TWAIN CIR UNIT 105, AMES 1 Story Frame Condomin… 2022-08-04        127100 <NA>              2006 0.027                    771        1                     NA          1181 Yes   No        (55) Res: D…
+    ## 3 0909428070  2030 MCCARTHY RD, AMES        1 Story Frame Single-F… 2022-08-15             0 <NA>              1951 0.321                   1456        3                   1261         14000 Yes   No        (32) Res: C…
+    ## 4 0923203160  3404 EMERALD DR, AMES         1 Story Frame Townhouse 2022-08-09        245000 <NA>              1997 0.103                   1289        4                    890          4500 Yes   No        (31) Res: M…
+    ## 5 0520440010  4507 EVEREST  AVE, AMES       <NA>          <NA>      2022-08-03        449664 <NA>                NA 0.287                     NA       NA                     NA         12493 No    No        (19) Res: N…
+    ## 6 0907275030  4512 HEMINGWAY DR, AMES       2 Story Frame Single-F… 2022-08-16        368000 <NA>              1996 0.494                   2223        4                     NA         21533 Yes   Yes       (37) Res: C…
+    ## # ℹ abbreviated name: ¹​`FinishedBsmtArea (sf)`
 
 ``` r
 # Inspect the structure of the dataset
@@ -58,7 +55,7 @@ str(data)
     ##  $ Address              : chr [1:6935] "1024 RIDGEWOOD AVE, AMES" "4503 TWAIN CIR UNIT 105, AMES" "2030 MCCARTHY RD, AMES" "3404 EMERALD DR, AMES" ...
     ##  $ Style                : Factor w/ 12 levels "1 1/2 Story Brick",..: 2 5 5 5 NA 9 5 5 5 5 ...
     ##  $ Occupancy            : Factor w/ 5 levels "Condominium",..: 2 1 2 3 NA 2 2 1 2 2 ...
-    ##  $ Sale Date            : Date[1:6935], format: "2022-08-12" "2022-08-04" ...
+    ##  $ Sale Date            : Date[1:6935], format: "2022-08-12" "2022-08-04" "2022-08-15" "2022-08-09" ...
     ##  $ Sale Price           : num [1:6935] 181900 127100 0 245000 449664 ...
     ##  $ Multi Sale           : chr [1:6935] NA NA NA NA ...
     ##  $ YearBuilt            : num [1:6935] 1940 2006 1951 1997 NA ...
@@ -97,7 +94,7 @@ unique(data[,"Sale Price"])
    labs(title = "Distribution of Sale Prices", x = "Sale Price", y = "Count")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-51-1.png)<!-- -->
 
 ``` r
 # Summary statistics of TotalLivingArea
@@ -114,10 +111,9 @@ ggplot(data, aes(x = `TotalLivingArea (sf)`)) +
   labs(title = "Distribution of Ground Living Area", x = "Ground Living Area (sq ft)", y = "Count")
 ```
 
-    ## Warning: Removed 447 rows containing non-finite outside the scale range
-    ## (`stat_bin()`).
+    ## Warning: Removed 447 rows containing non-finite outside the scale range (`stat_bin()`).
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-53-1.png)<!-- -->
 
 ``` r
 # Scatterplot of SalePrice vs TotalLivingArea
@@ -126,7 +122,148 @@ ggplot(data, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
   labs(title = "Sale Price vs Ground Living Area", x = "Ground Living Area (sq ft)", y = "Sale Price")
 ```
 
-    ## Warning: Removed 447 rows containing missing values or values outside the scale
-    ## range (`geom_point()`).
+    ## Warning: Removed 447 rows containing missing values or values outside the scale range (`geom_point()`).
 
-## ![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-54-1.png)<!-- -->
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+Thien Tam Nguyen - SalePrice and LotArea Analysis:
+
+1\.
+
+“Sale Price”: A numeric variable representing the selling price of each
+property. This variable ranges from low-value properties to luxury ones,
+generally from around \$50,000 to over \$20 million as seen in the
+histogram.
+
+“Lot Area (sf)”: A numeric variable representing the size of the
+property lot in square feet. The Lot Area ranges from small plots (less
+than 10,000 square feet) to very large areas exceeding 500,000 square
+feet.
+
+Both variables are continuous, and they provide insight into the
+property values and the physical size of the lots.
+
+2.  I am taking analysis of sale price and lotArea
+
+3.  The Sale Price histogram shows that the majority of properties are
+    sold for prices under \$5 million, with most sales clustered around
+    lower price points.There are a few extremely high sale prices (over
+    \$15 million), which could indicate unique or luxury properties.The
+    pattern shows that the market for properties in Ames is mostly
+    concentrated in the lower price range, with a small number of
+    high-value outliers.
+
+4.  The Sale Price has a wide range, but most properties are
+    concentrated in the lower value range, with some significant
+    outliers.The Lot Area is also skewed, with most properties being
+    small to medium-sized, but a few very large properties exist.There
+    is a general positive trend between Lot Area and Sale Price, but the
+    relationship is not perfectly linear, and other factors such as
+    location or house features may play a crucial role.
+
+``` r
+# Load Ames dataset
+data <- classdata::ames
+```
+
+``` r
+# View first few rows for relevant columns with corrected names
+colnames(data)
+```
+
+    ##  [1] "Parcel ID"             "Address"               "Style"                 "Occupancy"             "Sale Date"             "Sale Price"            "Multi Sale"            "YearBuilt"            
+    ##  [9] "Acres"                 "TotalLivingArea (sf)"  "Bedrooms"              "FinishedBsmtArea (sf)" "LotArea(sf)"           "AC"                    "FirePlace"             "Neighborhood"
+
+``` r
+head(data[, c("Sale Price", "LotArea(sf)")])
+```
+
+    ## # A tibble: 6 × 2
+    ##   `Sale Price` `LotArea(sf)`
+    ##          <dbl>         <dbl>
+    ## 1       181900          4740
+    ## 2       127100          1181
+    ## 3            0         14000
+    ## 4       245000          4500
+    ## 5       449664         12493
+    ## 6       368000         21533
+
+``` r
+# Inspect structure to understand data types of specific columns
+str(data[, c("Sale Price", "LotArea(sf)")])
+```
+
+    ## tibble [6,935 × 2] (S3: tbl_df/tbl/data.frame)
+    ##  $ Sale Price : num [1:6935] 181900 127100 0 245000 449664 ...
+    ##  $ LotArea(sf): num [1:6935] 4740 1181 14000 4500 12493 ...
+
+``` r
+# Histogram of Lot Area
+ggplot(data, aes(x = `LotArea(sf)`)) +
+  geom_histogram(binwidth = 1000, fill = 'orange', color = 'red') +
+  labs(title = "Distribution of Lot Area in Ames Properties", 
+       x = "Lot Area (square feet)", 
+       y = "Count")
+```
+
+    ## Warning: Removed 89 rows containing non-finite outside the scale range (`stat_bin()`).
+
+![](README_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+
+``` r
+#Scatterplot of Sale Price vs Lot Area in Ames Properties
+ggplot(data, aes(x = `LotArea(sf)`, y = `Sale Price`)) +
+  geom_point(color = 'darkgreen') +
+  labs(title = "Sale Price vs Lot Area in Ames Properties", 
+       x = "Lot Area (square feet)", 
+       y = "Sale Price ($)")
+```
+
+    ## Warning: Removed 89 rows containing missing values or values outside the scale range (`geom_point()`).
+
+![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+
+The scatter plot of Sale Price vs Lot Area shows a positive
+relationship, indicating that larger lot sizes generally lead to higher
+sale prices. However, there are many points with large lot areas and
+lower-than-expected sale prices, implying that other factors may be
+influencing the value.
+
+``` r
+# Scatterplot with trend line
+ggplot(data, aes(x = `LotArea(sf)`, y = `Sale Price`)) +
+  geom_point(color = 'darkblue') +
+  geom_smooth(method = "lm", color = 'red', se = FALSE) +
+  labs(title = "Sale Price vs Lot Area with Trend Line", 
+       x = "Lot Area (square feet)", 
+       y = "Sale Price ($)")
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+    ## Warning: Removed 89 rows containing non-finite outside the scale range (`stat_smooth()`).
+
+    ## Warning: Removed 89 rows containing missing values or values outside the scale range (`geom_point()`).
+
+![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
+
+The scatter plot with the **trend line** shows a downward slope, which
+could indicate that there isn’t a straightforward, consistent linear
+relationship between **Lot Area** and **Sale Price** for all properties.
+This suggests variability and possibly the influence of other
+characteristics.
+
+``` r
+# Histogram of Sale Price
+ggplot(data, aes(x = `Sale Price`)) +
+  geom_histogram(binwidth = 25000, fill = 'skyblue', color = 'black') +
+  labs(title = "Distribution of Sale Prices in Ames Properties", 
+       x = "Sale Price ($)", 
+       y = "Count")
+```
+
+## ![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->

@@ -4,7 +4,6 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit the README.Rmd file -->
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -17,19 +16,16 @@ library(knitr)
 
 # Lab #2 Team #11 - Report:
 
-Follow the instructions posted at https://ds202-at-isu.github.io/labs.html for the lab assignment. The work is meant to be finished during the lab time, but you have time until Monday evening to polish things.
+Follow the instructions posted at <https://ds202-at-isu.github.io/labs.html> for the lab assignment. The work is meant to be finished during the lab time, but you have time until Monday evening to polish things.
 
-Include your answers in this document (Rmd file). Make sure that it knits properly (into the md file). Upload both the Rmd and the md file to your repository.  
+Include your answers in this document (Rmd file). Make sure that it knits properly (into the md file). Upload both the Rmd and the md file to your repository.
 
-All submissions to the github repo will be automatically uploaded for grading once the due date is passed.
-Submit a link to your repository on Canvas (only one submission per team) to signal to the instructors that you are done with your submission.
+All submissions to the github repo will be automatically uploaded for grading once the due date is passed. Submit a link to your repository on Canvas (only one submission per team) to signal to the instructors that you are done with your submission.
 
----
-TL;DR Summary - Bhargav Yellepeddi:
-
-The analysis of Ames property sales since 2017 shows most sales between $100K–$400K. Total living area follows a normal distribution, with outliers. A positive correlation exists between living area and sale price, though it weakens for larger properties. Missing data led to 447 rows being excluded.
-
-----------------------------------------------------------------------------------------------------------------------------------------------
+|                                                                                                                                                                                                                                                                                                                |
+|------------------------------------------------------------------------|
+| TL;DR Summary - Bhargav Yellepeddi:                                                                                                                                                                                                                                                                            |
+| The analysis of Ames property sales since 2017 shows most sales between \$100K–\$400K. Total living area follows a normal distribution, with outliers. A positive correlation exists between living area and sale price, though it weakens for larger properties. Missing data led to 447 rows being excluded. |
 
 Bhargav Yellepeddi - SalePrice and Total Living Area Analysis:
 
@@ -48,11 +44,9 @@ head(data)
 str(data)
 ```
 
-
 ```{r}
 unique(data[,"Sale Price"])
 ```
-
 
 ```{r}
 # Histogram of SalePrice
@@ -61,12 +55,10 @@ unique(data[,"Sale Price"])
    labs(title = "Distribution of Sale Prices", x = "Sale Price", y = "Count")
 ```
 
-
 ```{r}
 # Summary statistics of TotalLivingArea
 summary(data$`TotalLivingArea (sf)`)
 ```
-
 
 ```{r}
 # Histogram of TotalLivingArea
@@ -75,11 +67,101 @@ ggplot(data, aes(x = `TotalLivingArea (sf)`)) +
   labs(title = "Distribution of Ground Living Area", x = "Ground Living Area (sq ft)", y = "Count")
 ```
 
-
 ```{r}
 # Scatterplot of SalePrice vs TotalLivingArea
 ggplot(data, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
   geom_point(color = 'purple') +
   labs(title = "Sale Price vs Ground Living Area", x = "Ground Living Area (sq ft)", y = "Sale Price")
 ```
-------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+Thien Tam Nguyen - SalePrice and LotArea Analysis:
+
+1\.
+
+"Sale Price": A numeric variable representing the selling price of each property. This variable ranges from low-value properties to luxury ones, generally from around \$50,000 to over \$20 million as seen in the histogram.
+
+"Lot Area (sf)": A numeric variable representing the size of the property lot in square feet. The Lot Area ranges from small plots (less than 10,000 square feet) to very large areas exceeding 500,000 square feet.
+
+Both variables are continuous, and they provide insight into the property values and the physical size of the lots.
+
+2.  I am taking analysis of sale price and lotArea
+
+3.  
+
+    The Sale Price histogram shows that the majority of properties are sold for prices under \$5 million, with most sales clustered around lower price points.There are a few extremely high sale prices (over \$15 million), which could indicate unique or luxury properties.The pattern shows that the market for properties in Ames is mostly concentrated in the lower price range, with a small number of high-value outliers.
+
+4.  
+
+    The Sale Price has a wide range, but most properties are concentrated in the lower value range, with some significant outliers.The Lot Area is also skewed, with most properties being small to medium-sized, but a few very large properties exist.There is a general positive trend between Lot Area and Sale Price, but the relationship is not perfectly linear, and other factors such as location or house features may play a crucial role.
+
+```{r}
+# Load Ames dataset
+data <- classdata::ames
+```
+
+```{r}
+# View first few rows for relevant columns with corrected names
+colnames(data)
+head(data[, c("Sale Price", "LotArea(sf)")])
+
+```
+
+```{r}
+# Inspect structure to understand data types of specific columns
+str(data[, c("Sale Price", "LotArea(sf)")])
+```
+
+```{r}
+library(ggplot2)
+# Histogram of Lot Area
+ggplot(data, aes(x = `LotArea(sf)`)) +
+  geom_histogram(binwidth = 1000, fill = 'orange', color = 'red') +
+  labs(title = "Distribution of Lot Area in Ames Properties", 
+       x = "Lot Area (square feet)", 
+       y = "Count")
+
+```
+
+```{r}
+library(ggplot2)
+#Scatterplot of Sale Price vs Lot Area in Ames Properties
+ggplot(data, aes(x = `LotArea(sf)`, y = `Sale Price`)) +
+  geom_point(color = 'darkgreen') +
+  labs(title = "Sale Price vs Lot Area in Ames Properties", 
+       x = "Lot Area (square feet)", 
+       y = "Sale Price ($)")
+
+```
+
+The scatter plot of Sale Price vs Lot Area shows a positive relationship, indicating that larger lot sizes generally lead to higher sale prices. However, there are many points with large lot areas and lower-than-expected sale prices, implying that other factors may be influencing the value.
+
+```{r}
+library(ggplot2)
+# Scatterplot with trend line
+ggplot(data, aes(x = `LotArea(sf)`, y = `Sale Price`)) +
+  geom_point(color = 'darkblue') +
+  geom_smooth(method = "lm", color = 'red', se = FALSE) +
+  labs(title = "Sale Price vs Lot Area with Trend Line", 
+       x = "Lot Area (square feet)", 
+       y = "Sale Price ($)")
+
+```
+
+The scatter plot with the **trend line** shows a downward slope, which could indicate that there isn't a straightforward, consistent linear relationship between **Lot Area** and **Sale Price** for all properties. This suggests variability and possibly the influence of other characteristics.
+
+```{r}
+library(ggplot2)
+# Histogram of Sale Price
+ggplot(data, aes(x = `Sale Price`)) +
+  geom_histogram(binwidth = 25000, fill = 'skyblue', color = 'black') +
+  labs(title = "Distribution of Sale Prices in Ames Properties", 
+       x = "Sale Price ($)", 
+       y = "Count")
+
+
+```
+------------------------------------------------------------------------
