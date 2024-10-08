@@ -1,6 +1,4 @@
 
-<!-- README.md is generated from README.Rmd. Please edit the README.Rmd file -->
-
 # Lab \#2 Team \#11 - Report:
 
 Follow the instructions posted at
@@ -17,10 +15,15 @@ grading once the due date is passed. Submit a link to your repository on
 Canvas (only one submission per team) to signal to the instructors that
 you are done with your submission.
 
-|  |
-|----|
-| TL;DR Summary - Bhargav Yellepeddi: |
-| The analysis of Ames property sales since 2017 shows most sales between \$100K–\$400K. Total living area follows a normal distribution, with outliers. A positive correlation exists between living area and sale price, though it weakens for larger properties. Missing data led to 447 rows being excluded. |
+    TL;DR Summary - Bhargav Yellepeddi:
+
+    The analysis of Ames property sales since 2017 shows most sales between $100K–$400K. Total living area follows a normal distribution, with outliers. A positive correlation exists between living area and sale price, though it weakens for larger properties. Missing data led to 447 rows being excluded.
+
+    TL;DR Summary - Keenan Jacobs:
+
+    In this analysis, we explore the relationship between property size (Acres) and sale price (Sale Price). We find that larger properties tend to have higher sale prices on average. However, there are some properties with large acreage that have surprisingly low sale prices, which could be due to factors such as location, property condition, or zoning regulations.
+
+Keenan Jacobs - SalePrice and Acres
 
 Bhargav Yellepeddi - SalePrice and Total Living Area Analysis:
 
@@ -126,7 +129,79 @@ ggplot(data, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
   labs(title = "Sale Price vs Ground Living Area", x = "Ground Living Area (sq ft)", y = "Sale Price")
 ```
 
-    ## Warning: Removed 447 rows containing missing values or values outside the scale
-    ## range (`geom_point()`).
+    ## Warning: Removed 447 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
 
-## ![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- --> Keenan Jacobs
+and Analysis of Acres
+
+``` r
+summary(data$Acres)
+```
+
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    ##  0.0000  0.1502  0.2200  0.2631  0.2770 12.0120      89
+
+The range shows a semi-wide distribution, with most properties having a
+small land size. Let’s visualize this distribution using a histogram.
+
+``` r
+# Histogram of Acres
+ggplot(data, aes(x = Acres)) + 
+  geom_histogram(binwidth = 0.1, fill = 'steelblue', color = 'black') +
+  labs(title = 'Distribution of Property Size (Acres)', x = 'Acres', y = 'Frequency')
+```
+
+    ## Warning: Removed 89 rows containing non-finite outside the scale range
+    ## (`stat_bin()`).
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+``` r
+# Scatterplot of Acres vs Sale Price
+ggplot(data, aes(x = Acres, y = `Sale Price`)) + 
+  geom_point(alpha = 0.5, color = 'darkgreen') +
+  labs(title = 'Scatterplot of Property Size vs Sale Price', x = 'Acres', y = 'Sale Price ($)')
+```
+
+    ## Warning: Removed 89 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- --> Here we can
+see there is a few huge outliers so we should probably filter them out
+and look again out our data as well as look at our outliers.
+
+``` r
+# Filter properties with high Acres but low Sale Price
+
+anomalies <- data %>% filter(Acres > 1, `Sale Price` < 50000)
+filtered_data <- data %>%
+  filter((Acres < 5 & `Sale Price` < 500000))
+```
+
+``` r
+# Boxplot of Anomalies by Style
+ggplot(anomalies, aes(x = Style, y = `Sale Price`)) + 
+  geom_boxplot(fill = 'lightgreen', color = 'darkgreen') +
+  coord_flip() +  # Flip coordinates for better readability
+  labs(title = 'Distribution of Sale Prices for Anomalies by Style', 
+       x = 'Property Style', 
+       y = 'Sale Price ($)') +
+  theme_minimal()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+``` r
+# Plotting the filtered data to confirm anomalies have been removed
+ggplot(filtered_data, aes(x = Acres, y = `Sale Price`)) +
+  geom_point(alpha = 0.5, color = 'darkgreen') +
+  labs(title = 'Scatterplot of Property Size vs Sale Price (Filtered Data)', 
+       x = 'Acres', y = 'Sale Price ($)')
+```
+
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- --> Here we can
+see a few points of data looking at the anomolies and also looking at
+the cleaned data. From the filtered data, we cna see that there is
+little correlation between acre size and sales price.
+————————————————————————————————————————————————
