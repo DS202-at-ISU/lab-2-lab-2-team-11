@@ -83,6 +83,7 @@ ggplot(data, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
   geom_point(color = 'purple') +
   labs(title = "Sale Price vs Ground Living Area", x = "Ground Living Area (sq ft)", y = "Sale Price")
 ```
+
 Keenan Jacobs and Analysis of Acres
 ```{r}
 summary(data$Acres)

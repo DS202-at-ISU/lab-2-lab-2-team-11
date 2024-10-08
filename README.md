@@ -132,8 +132,9 @@ ggplot(data, aes(x = `TotalLivingArea (sf)`, y = `Sale Price`)) +
     ## Warning: Removed 447 rows containing missing values or values outside the scale range
     ## (`geom_point()`).
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- --> Keenan Jacobs
-and Analysis of Acres
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+Keenan Jacobs and Analysis of Acres
 
 ``` r
 summary(data$Acres)
